@@ -10,7 +10,7 @@ status](https://travis-ci.org/tidymodels/workflows.svg?branch=master)](https://t
 [![Codecov test
 coverage](https://codecov.io/gh/tidymodels/workflows/branch/master/graph/badge.svg)](https://codecov.io/gh/tidymodels/workflows?branch=master)
 [![R build
-status](https://github.com/tidymodels/workflows/workflows/R-CMD-check/badge.svg)](https://github.com/tidymodels/workflows)
+status](https://github.com/tidymodels/workflows/workflows/R-CMD-check/badge.svg)](https://github.com/tidymodels/workflows/actions)
 <!-- badges: end -->
 
 ## What is a workflow?
@@ -91,7 +91,7 @@ workflows makes this easier by combining these objects together:
 ``` r
 car_wflow <- workflow() %>% 
   add_recipe(spline_cars) %>% 
-  add_model(Bayes_lm)
+  add_model(bayes_lm)
 ```
 
 Now you can prepare the recipe and estimate the model via a single call
