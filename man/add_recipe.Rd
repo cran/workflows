@@ -20,7 +20,11 @@ update_recipe(x, recipe, ..., blueprint = NULL)
 \item{...}{Not used.}
 
 \item{blueprint}{A hardhat blueprint used for fine tuning the preprocessing.
-If \code{NULL}, \code{\link[hardhat:default_recipe_blueprint]{hardhat::default_recipe_blueprint()}} is used.}
+
+If \code{NULL}, \code{\link[hardhat:default_recipe_blueprint]{hardhat::default_recipe_blueprint()}} is used.
+
+Note that preprocessing done here is separate from preprocessing that
+might be done automatically by the underlying model.}
 }
 \value{
 \code{x}, updated with either a new or removed recipe preprocessor.
@@ -44,16 +48,17 @@ specified, but not both.
 }
 \examples{
 library(recipes)
+library(magrittr)
 
-recipe <- recipe(mpg ~ cyl, mtcars)
-recipe <- step_log(recipe, cyl)
+recipe <- recipe(mpg ~ cyl, mtcars) \%>\%
+  step_log(cyl)
 
-workflow <- workflow()
-workflow <- add_recipe(workflow, recipe)
+workflow <- workflow() \%>\%
+  add_recipe(recipe)
+
 workflow
 
 remove_recipe(workflow)
 
 update_recipe(workflow, recipe(mpg ~ cyl, mtcars))
-
 }

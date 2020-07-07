@@ -12,6 +12,8 @@
 #' In the future, there will also be _postprocessing_ steps that can be added
 #' after the model has been fit.
 #'
+#' @includeRmd man/rmd/indicators.Rmd details
+#'
 #' @param object A workflow
 #'
 #' @param data A data frame of predictors and outcomes to use when fitting the
@@ -30,23 +32,26 @@
 #' @examples
 #' library(parsnip)
 #' library(recipes)
+#' library(magrittr)
 #'
-#' model <- linear_reg()
-#' model <- set_engine(model, "lm")
+#' model <- linear_reg() %>%
+#'   set_engine("lm")
 #'
-#' base_workflow <- workflow()
-#' base_workflow <- add_model(base_workflow, model)
+#' base_wf <- workflow() %>%
+#'   add_model(model)
 #'
-#' formula_workflow <- add_formula(base_workflow, mpg ~ cyl + log(disp))
+#' formula_wf <- base_wf %>%
+#'   add_formula(mpg ~ cyl + log(disp))
 #'
-#' fit(formula_workflow, mtcars)
+#' fit(formula_wf, mtcars)
 #'
-#' recipe <- recipe(mpg ~ cyl + disp, mtcars)
-#' recipe <- step_log(recipe, disp)
+#' recipe <- recipe(mpg ~ cyl + disp, mtcars) %>%
+#'   step_log(disp)
 #'
-#' recipe_workflow <- add_recipe(base_workflow, recipe)
+#' recipe_wf <- base_wf %>%
+#'   add_recipe(recipe)
 #'
-#' fit(recipe_workflow, mtcars)
+#' fit(recipe_wf, mtcars)
 fit.workflow <- function(object, data, ..., control = control_workflow()) {
   workflow <- object
 
@@ -96,18 +101,20 @@ fit.workflow <- function(object, data, ..., control = control_workflow()) {
 #' @examples
 #' library(parsnip)
 #' library(recipes)
+#' library(magrittr)
 #'
-#' model <- linear_reg()
-#' model <- set_engine(model, "lm")
+#' model <- linear_reg() %>%
+#'   set_engine("lm")
 #'
-#' base_workflow <- workflow()
-#' base_workflow <- add_model(base_workflow, model)
+#' unfit_wf <- workflow() %>%
+#'   add_model(model) %>%
+#'   add_formula(mpg ~ cyl + log(disp))
 #'
-#' formula_workflow <- add_formula(base_workflow, mpg ~ cyl + log(disp))
-#'
-#' partially_fit_workflow <- .fit_pre(formula_workflow, mtcars)
-#' fit_workflow <- .fit_model(partially_fit_workflow, control_workflow())
+#' partially_fit_wf <- .fit_pre(unfit_wf, mtcars)
+#' fit_workflow <- .fit_model(partially_fit_wf, control_workflow())
 .fit_pre <- function(workflow, data) {
+  workflow <- finalize_blueprint(workflow)
+
   n <- length(workflow[["pre"]]$actions)
 
   for(i in seq_len(n)) {
@@ -152,4 +159,74 @@ validate_has_minimal_components <- function(x) {
   }
 
   invisible(x)
+}
+
+
+# ------------------------------------------------------------------------------
+
+finalize_blueprint <- function(workflow) {
+  # Use user supplied blueprint if provided
+  if (has_blueprint(workflow)) {
+    return(workflow)
+  }
+
+  if (has_preprocessor_recipe(workflow)) {
+    finalize_blueprint_recipe(workflow)
+  } else if (has_preprocessor_formula(workflow)) {
+    finalize_blueprint_formula(workflow)
+  } else {
+    abort("Internal error: `workflow` should have a preprocessor at this point.")
+  }
+}
+
+finalize_blueprint_recipe <- function(workflow) {
+  # Use the default blueprint, no parsnip model encoding info is used here
+  blueprint <- hardhat::default_recipe_blueprint()
+
+  recipe <- pull_workflow_preprocessor(workflow)
+
+  update_recipe(workflow, recipe = recipe, blueprint = blueprint)
+}
+
+finalize_blueprint_formula <- function(workflow) {
+  tbl_encodings <- pull_workflow_spec_encoding_tbl(workflow)
+
+  indicators <- tbl_encodings$predictor_indicators
+  intercept <- tbl_encodings$compute_intercept
+
+  if (!is_string(indicators)) {
+    abort("Internal error: `indicators` encoding from parsnip should be a string.")
+  }
+  if (!is_bool(intercept)) {
+    abort("Internal error: `intercept` encoding from parsnip should be a bool.")
+  }
+
+  # Use model specific information to construct the blueprint
+  blueprint <- hardhat::default_formula_blueprint(
+    indicators = indicators,
+    intercept = intercept
+  )
+
+  formula <- pull_workflow_preprocessor(workflow)
+
+  update_formula(workflow, formula = formula, blueprint = blueprint)
+}
+
+pull_workflow_spec_encoding_tbl <- function(workflow) {
+  spec <- pull_workflow_spec(workflow)
+  spec_cls <- class(spec)[[1]]
+
+  tbl_encodings <- parsnip::get_encoding(spec_cls)
+
+  indicator_engine <- tbl_encodings$engine == spec$engine
+  indicator_mode <- tbl_encodings$mode == spec$mode
+  indicator_spec <- indicator_engine & indicator_mode
+
+  out <- tbl_encodings[indicator_spec, , drop = FALSE]
+
+  if (nrow(out) != 1L) {
+    abort("Internal error: Exactly 1 model/engine/mode combination must be located.")
+  }
+
+  out
 }

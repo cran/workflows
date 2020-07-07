@@ -24,7 +24,11 @@
 #' @param ... Not used.
 #'
 #' @param blueprint A hardhat blueprint used for fine tuning the preprocessing.
+#'
 #'   If `NULL`, [hardhat::default_recipe_blueprint()] is used.
+#'
+#'   Note that preprocessing done here is separate from preprocessing that
+#'   might be done automatically by the underlying model.
 #'
 #' @return
 #' `x`, updated with either a new or removed recipe preprocessor.
@@ -32,18 +36,19 @@
 #' @export
 #' @examples
 #' library(recipes)
+#' library(magrittr)
 #'
-#' recipe <- recipe(mpg ~ cyl, mtcars)
-#' recipe <- step_log(recipe, cyl)
+#' recipe <- recipe(mpg ~ cyl, mtcars) %>%
+#'   step_log(cyl)
 #'
-#' workflow <- workflow()
-#' workflow <- add_recipe(workflow, recipe)
+#' workflow <- workflow() %>%
+#'   add_recipe(recipe)
+#'
 #' workflow
 #'
 #' remove_recipe(workflow)
 #'
 #' update_recipe(workflow, recipe(mpg ~ cyl, mtcars))
-#'
 add_recipe <- function(x, recipe, ..., blueprint = NULL) {
   ellipsis::check_dots_empty()
   validate_recipes_available()
@@ -107,9 +112,8 @@ new_action_recipe <- function(recipe, blueprint) {
     abort("`recipe` must be a recipe.")
   }
 
-  if (is.null(blueprint)) {
-    blueprint <- hardhat::default_recipe_blueprint()
-  } else if (!is_recipe_blueprint(blueprint)) {
+  # `NULL` blueprints are finalized at fit time
+  if (!is_null(blueprint) && !is_recipe_blueprint(blueprint)) {
     abort("`blueprint` must be a hardhat 'recipe_blueprint'.")
   }
 
