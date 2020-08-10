@@ -1,7 +1,7 @@
-5c11158d5cc7e9647244f900e04f23cb *DESCRIPTION
+19706b2c45992072da23ab09f630e17f *DESCRIPTION
 558c5e7265510691231601da3cb3f12b *LICENSE
 07a2d7391bf52e82da9eb63f77688706 *NAMESPACE
-b10252ac18cfe3bd1995550cafa2e68d *NEWS.md
+03c94864b3e407f3bbba1c017c3e2f07 *NEWS.md
 1930c22f1fa9e2b749d72411e3a321d1 *R/action.R
 6ff61ce96b8a0aca5f241ef7aaab4a68 *R/compat-purrr.R
 22c5ef1f0887e4b2438fea2b5ace5cf6 *R/control.R
@@ -49,7 +49,7 @@ f471752cc92f92cb1f006ef7dd3969f6 *tests/testthat/test-fit-action-model.R
 6163e05d0ee9c5016d823b2300e9b3c7 *tests/testthat/test-fit.R
 a0f998c6221d141e2b9a70e558346fca *tests/testthat/test-pre-action-formula.R
 72d420e6739360e5a01bb26a682e9f97 *tests/testthat/test-pre-action-recipe.R
-43d48f06e261a3b1f2ec222d0c25e339 *tests/testthat/test-predict.R
+61d26705a632e57b034f4ec36c318b7e *tests/testthat/test-predict.R
 46b7be97a740c2e210e2f1b6bfe698c5 *tests/testthat/test-printing.R
 e17996a210a2483698647541ee6284c7 *tests/testthat/test-pull.R
 4038ea7778dc3195fe51f110a0afeb65 *tests/testthat/test-tidy.R
