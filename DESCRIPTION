@@ -1,6 +1,6 @@
 Package: workflows
 Title: Modeling Workflows
-Version: 0.2.0
+Version: 0.2.1
 Authors@R: 
     c(person(given = "Davis",
              family = "Vaughan",
@@ -27,9 +27,9 @@ Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.1
 NeedsCompilation: no
-Packaged: 2020-09-15 20:25:09 UTC; davis
+Packaged: 2020-10-08 19:44:57 UTC; davis
 Author: Davis Vaughan [aut, cre],
   RStudio [cph]
 Maintainer: Davis Vaughan <davis@rstudio.com>
 Repository: CRAN
-Date/Publication: 2020-09-15 21:00:02 UTC
+Date/Publication: 2020-10-08 20:10:03 UTC
