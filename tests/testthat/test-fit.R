@@ -12,7 +12,7 @@ test_that("can `fit()` a workflow with a recipe", {
 
   result <- fit(workflow, mtcars)
 
-  expect_is(result$fit$fit, "model_fit")
+  expect_s3_class(result$fit$fit, "model_fit")
 
   expect_equal(
     coef(result$fit$fit$fit),
@@ -30,7 +30,7 @@ test_that("can `fit()` a workflow with a formula", {
 
   result <- fit(workflow, mtcars)
 
-  expect_is(result$fit$fit, "model_fit")
+  expect_s3_class(result$fit$fit, "model_fit")
 
   expect_equal(
     coef(result$fit$fit$fit),
@@ -47,6 +47,22 @@ test_that("missing `data` argument has a nice error", {
   workflow <- add_model(workflow, mod)
 
   expect_error(fit(workflow), "`data` must be provided to fit a workflow")
+})
+
+test_that("invalid `control` argument has a nice error", {
+  mod <- parsnip::linear_reg()
+  mod <- parsnip::set_engine(mod, "lm")
+
+  workflow <- workflow()
+  workflow <- add_formula(workflow, mpg ~ cyl)
+  workflow <- add_model(workflow, mod)
+
+  control <- parsnip::control_parsnip()
+
+  expect_error(
+    fit(workflow, mtcars, control = control),
+    "`control` must be a workflows control object created by `control_workflow[(][)]`."
+  )
 })
 
 test_that("cannot fit without a pre stage", {
@@ -168,8 +184,8 @@ test_that("workflow is marked as 'trained' after going through `.fit_finalize()`
   workflow_model <- .fit_model(workflow_pre, control_workflow())
   workflow_final <- .fit_finalize(workflow_model)
 
-  expect_false(workflow_model$trained)
-  expect_true(workflow_final$trained)
+  expect_false(is_trained_workflow(workflow_model))
+  expect_true(is_trained_workflow(workflow_final))
 })
 
 test_that("can `predict()` from workflow fit from individual pieces", {

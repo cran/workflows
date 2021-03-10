@@ -1,3 +1,23 @@
+# workflows 0.2.2
+  
+* `add_variables()` now allows for specifying a bundle of model terms through
+  `add_variables(variables = )`, supplying a pre-created set of variables with
+  the new `workflow_variables()` helper. This is useful for supplying a set
+  of variables programmatically (#92).
+
+* New `is_trained_workflow()` for determining if a workflow has already been
+  trained through a call to `fit()` (#91).
+
+* `fit()` now errors immediately if `control` is not created by
+  `control_workflow()` (#89).
+
+* Added `broom::augment()` and `broom::glance()` methods for trained workflow
+  objects (#76).
+
+* Added support for butchering a workflow using `butcher::butcher()`.
+
+* Updated to testthat 3.0.0.
+
 # workflows 0.2.1
 
 * New `.fit_finalize()` for internal usage by the tune package.

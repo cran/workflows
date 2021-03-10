@@ -1,11 +1,14 @@
+# ------------------------------------------------------------------------------
+# workflow()
+
 test_that("can create a basic workflow", {
   workflow <- workflow()
 
-  expect_is(workflow, "workflow")
+  expect_s3_class(workflow, "workflow")
 
-  expect_is(workflow$pre, "stage_pre")
-  expect_is(workflow$fit, "stage_fit")
-  expect_is(workflow$post, "stage_post")
+  expect_s3_class(workflow$pre, "stage_pre")
+  expect_s3_class(workflow$fit, "stage_fit")
+  expect_s3_class(workflow$post, "stage_post")
 
   expect_equal(workflow$pre$actions, list())
   expect_equal(workflow$pre$mold, NULL)
@@ -25,6 +28,9 @@ test_that("workflow must be the first argument when adding actions", {
   expect_error(add_model(1, mod), "must be a workflow")
 })
 
+# ------------------------------------------------------------------------------
+# new_workflow()
+
 test_that("constructor validates input", {
   expect_error(new_workflow(pre = 1), "must be a `stage`")
   expect_error(new_workflow(fit = 1), "must be a `stage`")
@@ -33,3 +39,23 @@ test_that("constructor validates input", {
   expect_error(new_workflow(trained = 1), "must be a single logical value")
 })
 
+# ------------------------------------------------------------------------------
+# is_trained_workflow()
+
+test_that("can check if a workflow is trained", {
+  rec <- recipes::recipe(mpg ~ cyl, mtcars)
+  mod <- parsnip::linear_reg()
+  mod <- parsnip::set_engine(mod, "lm")
+
+  wf <- workflow()
+  wf <- add_recipe(wf, rec)
+  wf <- add_model(wf, mod)
+
+  expect_false(is_trained_workflow(wf))
+  wf <- fit(wf, mtcars)
+  expect_true(is_trained_workflow(wf))
+})
+
+test_that("input must be a workflow", {
+  expect_snapshot_error(is_trained_workflow(1))
+})
