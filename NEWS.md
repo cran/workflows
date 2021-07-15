@@ -1,3 +1,15 @@
+# workflows 0.2.3
+
+* `workflow()` has gained new `preprocessor` and `spec` arguments for adding
+  a preprocessor (such as a recipe or formula) and a parsnip model specification
+  directly to a workflow upon creation. In many cases, this can reduce the
+  lines of code required to construct a complete workflow (#108).
+  
+* New `extract_*()` functions have been added that supersede the existing
+  `pull_*()` functions. This is part of a larger move across the tidymodels
+  packages towards a family of generic `extract_*()` functions. The `pull_*()`
+  functions have been soft-deprecated, and will eventually be removed (#106).
+
 # workflows 0.2.2
   
 * `add_variables()` now allows for specifying a bundle of model terms through
