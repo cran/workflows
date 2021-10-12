@@ -6,16 +6,18 @@
 \alias{update_model}
 \title{Add a model to a workflow}
 \usage{
-add_model(x, spec, formula = NULL)
+add_model(x, spec, ..., formula = NULL)
 
 remove_model(x)
 
-update_model(x, spec, formula = NULL)
+update_model(x, spec, ..., formula = NULL)
 }
 \arguments{
 \item{x}{A workflow.}
 
 \item{spec}{A parsnip model specification.}
+
+\item{...}{These dots are for future extensions and must be empty.}
 
 \item{formula}{An optional formula override to specify the terms of the
 model. Typically, the terms are extracted from the formula or recipe
@@ -53,7 +55,7 @@ estate prices, the \code{type} variable has three levels: \code{"Residential"},
 \code{"Condo"}, and \code{"Multi-Family"}. This base \code{workflow()} contains a
 formula added via \code{\link[=add_formula]{add_formula()}} to predict property
 price from property type, square footage, number of beds, and number of
-baths:\if{html}{\out{<div class="r">}}\preformatted{set.seed(123)
+baths:\if{html}{\out{<div class="sourceCode r">}}\preformatted{set.seed(123)
 
 library(parsnip)
 library(recipes)
@@ -66,7 +68,7 @@ base_wf <- workflow() \%>\%
   add_formula(price ~ type + sqft + beds + baths)
 }\if{html}{\out{</div>}}
 
-This first model does create dummy/indicator variables:\if{html}{\out{<div class="r">}}\preformatted{lm_spec <- linear_reg() \%>\%
+This first model does create dummy/indicator variables:\if{html}{\out{<div class="sourceCode r">}}\preformatted{lm_spec <- linear_reg() \%>\%
   set_engine("lm")
 
 base_wf \%>\%
@@ -98,7 +100,7 @@ binary predictors, \code{typeMulti_Family} and \code{typeResidential}. (The thir
 type, for condos, does not need its own column because it is the
 baseline level).
 
-This second model does not create dummy/indicator variables:\if{html}{\out{<div class="r">}}\preformatted{rf_spec <- rand_forest() \%>\%
+This second model does not create dummy/indicator variables:\if{html}{\out{<div class="sourceCode r">}}\preformatted{rf_spec <- rand_forest() \%>\%
   set_mode("regression") \%>\%
   set_engine("ranger")
 

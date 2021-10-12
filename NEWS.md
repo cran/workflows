@@ -1,3 +1,15 @@
+# workflows 0.2.4
+
+* `add_model()` and `update_model()` now use `...` to separate the required
+  arguments from the optional arguments, forcing optional arguments to be
+  named. This change was made to make it easier for us to extend these functions
+  with new arguments in the future.
+  
+* The workflows method for `generics::required_pkgs()` is now registered
+  unconditionally (#121).
+
+* Internally cleaned up remaining usage of soft-deprecated `pull_*()` functions.
+
 # workflows 0.2.3
 
 * `workflow()` has gained new `preprocessor` and `spec` arguments for adding
