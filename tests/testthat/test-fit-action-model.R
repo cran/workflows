@@ -9,7 +9,7 @@ test_that("can add a model to a workflow", {
 })
 
 test_that("model is validated", {
-  expect_error(add_model(workflow(), 1), "`spec` must be a `model_spec`")
+  expect_snapshot(error = TRUE, add_model(workflow(), 1))
 })
 
 test_that("cannot add two models", {
@@ -19,7 +19,7 @@ test_that("cannot add two models", {
   workflow <- workflow()
   workflow <- add_model(workflow, mod)
 
-  expect_error(add_model(workflow, mod), "`model` action has already been added")
+  expect_snapshot(error = TRUE, add_model(workflow, mod))
 })
 
 test_that("can provide a model formula override", {
@@ -50,8 +50,8 @@ test_that("remove a model", {
   workflow_no_model <- workflow()
   workflow_no_model <- add_formula(workflow_no_model, mpg ~ cyl)
 
-  workflow_with_model  <- add_model(workflow_no_model, lm_model)
-  workflow_removed_model  <- remove_model(workflow_with_model)
+  workflow_with_model <- add_model(workflow_no_model, lm_model)
+  workflow_removed_model <- remove_model(workflow_with_model)
 
   expect_equal(workflow_no_model$fit, workflow_removed_model$fit)
 })
@@ -63,10 +63,10 @@ test_that("remove a model after model fit", {
   workflow_no_model <- workflow()
   workflow_no_model <- add_formula(workflow_no_model, mpg ~ cyl)
 
-  workflow_with_model  <- add_model(workflow_no_model, lm_model)
+  workflow_with_model <- add_model(workflow_no_model, lm_model)
   workflow_with_model <- fit(workflow_with_model, data = mtcars)
 
-  workflow_removed_model  <- remove_model(workflow_with_model)
+  workflow_removed_model <- remove_model(workflow_with_model)
 
   expect_equal(workflow_no_model$fit, workflow_removed_model$fit)
 })

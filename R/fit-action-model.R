@@ -14,7 +14,7 @@
 #'
 #' @includeRmd man/rmd/indicators.Rmd details
 #'
-#' @inheritParams ellipsis::dots_empty
+#' @inheritParams rlang::args_dots_empty
 #'
 #' @param x A workflow.
 #'
@@ -58,9 +58,8 @@
 #'
 #' update_model(workflow, regularized_model)
 #' update_model(fitted, regularized_model)
-#'
 add_model <- function(x, spec, ..., formula = NULL) {
-  ellipsis::check_dots_empty()
+  check_dots_empty()
   action <- new_action_model(spec, formula)
   add_action(x, action, "model")
 }
@@ -86,7 +85,7 @@ remove_model <- function(x) {
 #' @rdname add_model
 #' @export
 update_model <- function(x, spec, ..., formula = NULL) {
-  ellipsis::check_dots_empty()
+  check_dots_empty()
   x <- remove_model(x)
   add_model(x, spec, formula = formula)
 }
@@ -106,7 +105,7 @@ fit.action_model <- function(object, workflow, control) {
   mold <- workflow$pre$mold
 
   if (is.null(mold)) {
-    abort("Internal error: No mold exists. `workflow` pre stage has not been run.")
+    abort("No mold exists. `workflow` pre stage has not been run.", .internal = TRUE)
   }
 
   if (is.null(formula)) {
@@ -132,13 +131,15 @@ fit_from_formula <- function(spec, mold, control_parsnip, formula) {
 
 # ------------------------------------------------------------------------------
 
-new_action_model <- function(spec, formula) {
+new_action_model <- function(spec, formula, ..., call = caller_env()) {
+  check_dots_empty()
+
   if (!is_model_spec(spec)) {
-    abort("`spec` must be a `model_spec`.")
+    abort("`spec` must be a `model_spec`.", call = call)
   }
 
   if (!is.null(formula) && !is_formula(formula)) {
-    abort("`formula` must be a formula, or `NULL`.")
+    abort("`formula` must be a formula, or `NULL`.", call = call)
   }
 
   new_action_fit(spec = spec, formula = formula, subclass = "action_model")

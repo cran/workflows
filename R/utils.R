@@ -6,8 +6,8 @@ is_uniquely_named <- function(x) {
   }
 }
 
-glubort <- function (..., .sep = "", .envir = parent.frame()) {
-  abort(glue::glue(..., .sep = .sep, .envir = .envir))
+glubort <- function(..., .sep = "", .envir = caller_env(), .call = .envir) {
+  abort(glue::glue(..., .sep = .sep, .envir = .envir), call = .call)
 }
 
 is_model_fit <- function(x) {
@@ -18,36 +18,38 @@ is_model_spec <- function(x) {
   inherits(x, "model_spec")
 }
 
-validate_recipes_available <- function() {
+validate_recipes_available <- function(..., call = caller_env()) {
+  check_dots_empty()
+
   if (!requireNamespace("recipes", quietly = TRUE)) {
-    abort(
-      "The `recipes` package must be available to add a recipe."
-    )
+    abort("The `recipes` package must be available to add a recipe.", call = call)
   }
+
   invisible()
 }
 
 # ------------------------------------------------------------------------------
 
 # https://github.com/r-lib/tidyselect/blob/10e00cea2fff3585fc827b6a7eb5e172acadbb2f/R/utils.R#L109
-vec_index_invert <- function (x) {
+vec_index_invert <- function(x) {
   if (vec_index_is_empty(x)) {
     TRUE
-  }
-  else {
+  } else {
     -x
   }
 }
 
-vec_index_is_empty <- function (x) {
+vec_index_is_empty <- function(x) {
   !length(x) || all(x == 0L)
 }
 
 # ------------------------------------------------------------------------------
 
-validate_is_workflow <- function(x, arg = "`x`") {
+validate_is_workflow <- function(x, ..., arg = "`x`", call = caller_env()) {
+  check_dots_empty()
+
   if (!is_workflow(x)) {
-    glubort("{arg} must be a workflow, not a {class(x)[[1]]}.")
+    glubort("{arg} must be a workflow, not a {class(x)[[1]]}.", .call = call)
   }
 
   invisible(x)
@@ -87,6 +89,6 @@ has_blueprint <- function(x) {
   } else if (has_preprocessor_variables(x)) {
     !is.null(x$pre$actions$variables$blueprint)
   } else {
-    abort("Internal error: `x` must have a preprocessor to check for a blueprint.")
+    abort("`x` must have a preprocessor to check for a blueprint.", .internal = TRUE)
   }
 }
