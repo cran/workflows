@@ -1,7 +1,7 @@
-e0937f54c00e1067a019caad44d26dcf *DESCRIPTION
+1800c3c53d3255623e7a78a83a51b227 *DESCRIPTION
 558c5e7265510691231601da3cb3f12b *LICENSE
 970e0f90bde190848c2066a0ed89c3dc *NAMESPACE
-8b8b6a2cd3a119d63c5fa4f9804fd964 *NEWS.md
+dbd92b1101c646e1c08aa260113441b2 *NEWS.md
 fb6f5363b3875427f057b879ead8b0dd *R/action.R
 85742b958062e7aa997cd82da3f5af79 *R/broom.R
 16ea34767a4ad6c614dcf3fcdd07fd3b *R/butcher.R
@@ -21,7 +21,7 @@ be7ba0942a6cccfb1700f222f754cb4f *R/pull.R
 ddd7079d02540d4b65e4e90249e35f18 *R/utils.R
 68de90a312200f7ae3c4fcb9f74be88e *R/workflow.R
 1e333fb1f57fbf3a35647f5b0701c39c *R/workflows-package.R
-fb6265268d696ea1e0c651533a892689 *R/zzz.R
+a30c377467324d91fd6fa5c1e8ca4dc9 *R/zzz.R
 7b757a3b1001c62b8791e9736a7c4515 *README.md
 fb7079034ec79ab2232cf4e6ba7afbb0 *build/vignette.rds
 c5668b9cd1601b17d52cc470442f5484 *inst/doc/stages.R
@@ -69,7 +69,7 @@ ad1c3a4a83dd1af1c7be92d29b96edcc *tests/testthat/helper-extract_parameter_set.R
 fef0adc7afe10a666cefc08d97a0d3c1 *tests/testthat/test-broom.R
 909a09b0aa06b337de134923e9c73701 *tests/testthat/test-butcher.R
 aeaad7685d78b067839bec8b67492533 *tests/testthat/test-control.R
-1d959c5228bb0eacdd2db5f0056cd151 *tests/testthat/test-extract.R
+b3fd98926f68b176c4e1539454fe2985 *tests/testthat/test-extract.R
 2c62ee62d19a7eaecfaad045978b0fd0 *tests/testthat/test-fit-action-model.R
 2898d601ac2ee7f3a7650927783c87bb *tests/testthat/test-fit.R
 6ddfe3ef0289563e6492f01bb41134cf *tests/testthat/test-generics.R

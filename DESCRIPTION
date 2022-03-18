@@ -1,6 +1,6 @@
 Package: workflows
 Title: Modeling Workflows
-Version: 0.2.5
+Version: 0.2.6
 Authors@R: c(
     person("Davis", "Vaughan", , "davis@rstudio.com", role = c("aut", "cre")),
     person("RStudio", role = c("cph", "fnd"))
@@ -27,9 +27,9 @@ Config/testthat/edition: 3
 Encoding: UTF-8
 RoxygenNote: 7.1.2
 NeedsCompilation: no
-Packaged: 2022-03-16 17:45:18 UTC; davis
+Packaged: 2022-03-18 13:09:13 UTC; davis
 Author: Davis Vaughan [aut, cre],
   RStudio [cph, fnd]
 Maintainer: Davis Vaughan <davis@rstudio.com>
 Repository: CRAN
-Date/Publication: 2022-03-16 22:30:02 UTC
+Date/Publication: 2022-03-18 14:00:02 UTC
