@@ -1,3 +1,25 @@
+# workflows 1.1.0
+
+* Simon Couch is now the maintainer (#170).
+
+* `add_model()` now errors if you try to add a model specification
+  that contains an unknown mode. This is a breaking change, as previously in
+  some cases it would successfully "guess" the mode. This change brings
+  workflows more in line with `parsnip::fit()` and `parsnip::fit_xy()`
+  (#160, tidymodels/parsnip#801).
+
+* `broom::augment()` now works correctly in the edge case where you had supplied
+  a hardhat blueprint with `composition` set to either `"matrix"` or
+  `"dgCMatrix"` (#148).
+
+* `butcher::axe_fitted()` now axes the recipe preprocessor that is stored inside
+  a workflow, which will reduce the size of the `template` data frame that is
+  stored in the recipe (#147).
+
+* `add_formula()` no longer silently ignores offsets supplied with `offset()`.
+  Instead, it now errors at `fit()` time with a message that encourages you to
+  use a model formula through `add_model(formula = )` instead (#162).
+
 # workflows 1.0.0
 
 * New `add_case_weights()`, `update_case_weights()`, and `remove_case_weights()`

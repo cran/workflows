@@ -1,8 +1,10 @@
 Package: workflows
 Title: Modeling Workflows
-Version: 1.0.0
+Version: 1.1.0
 Authors@R: c(
-    person("Davis", "Vaughan", , "davis@rstudio.com", role = c("aut", "cre")),
+    person("Davis", "Vaughan", , "davis@rstudio.com", role = "aut"),
+    person("Simon", "Couch", , "simonpatrickcouch@gmail.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0001-5676-5107")),
     person("RStudio", role = c("cph", "fnd"))
   )
 Description: Managing both a 'parsnip' model and a preprocessor, such as a
@@ -25,11 +27,12 @@ Config/Needs/website: dplyr, ggplot2, tidyr, tidyverse/tidytemplate,
         yardstick
 Config/testthat/edition: 3
 Encoding: UTF-8
-RoxygenNote: 7.2.0
+RoxygenNote: 7.2.1
 NeedsCompilation: no
-Packaged: 2022-07-05 14:46:30 UTC; davis
-Author: Davis Vaughan [aut, cre],
+Packaged: 2022-09-21 16:26:20 UTC; davis
+Author: Davis Vaughan [aut],
+  Simon Couch [aut, cre] (<https://orcid.org/0000-0001-5676-5107>),
   RStudio [cph, fnd]
-Maintainer: Davis Vaughan <davis@rstudio.com>
+Maintainer: Simon Couch <simonpatrickcouch@gmail.com>
 Repository: CRAN
-Date/Publication: 2022-07-05 15:20:02 UTC
+Date/Publication: 2022-09-26 07:30:02 UTC
