@@ -1,3 +1,12 @@
+# workflows 1.1.1
+
+* Tightens integration with parsnip's machinery for checking that needed 
+  parsnip extension packages are loaded. `add_model()` will now error if a model
+  specification is supplied that requires a missing extension package (#184).
+  
+* Introduces support for unsupervised model specifications via the modelenv
+  package (#180). 
+
 # workflows 1.1.0
 
 * Simon Couch is now the maintainer (#170).
