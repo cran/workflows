@@ -1,7 +1,7 @@
-26c917ed284745b2780a14d67a2362ba *DESCRIPTION
+7dcc6a540746e6c09c45aa1d4274a0ee *DESCRIPTION
 558c5e7265510691231601da3cb3f12b *LICENSE
-5953263a09d14ff23363597cbb459015 *NAMESPACE
-0733665c6e9ae34653aa27719526f054 *NEWS.md
+0e1d28152d034189180ad25ae500b2e8 *NAMESPACE
+58e50b57fb457b7213448110bc83b7dc *NEWS.md
 555495db4ee96d1c1c3efea931afcc94 *R/action.R
 300bbcfca017a755cb7ee4dc590dc586 *R/broom.R
 99f9c9752835a30bfed74823526afc8a *R/butcher.R
@@ -10,7 +10,7 @@
 c9a6d7e18d8e3c39b9c7896b2e70103b *R/extract.R
 dcf0fc50865679e542ac7c4a86fcc44c *R/fit-action-model.R
 1c21863e7bed2ec1ddd47c170542a66c *R/fit.R
-dc473d7b201a7c646b0cf27cdff6be89 *R/generics.R
+449edc12d345084e58dc0488f90ebbab *R/generics.R
 b504c4660ea9f8d5a8cefca67a62cc8c *R/pre-action-case-weights.R
 cb7f2f00fa99e28dc837fef2b1390d07 *R/pre-action-formula.R
 36a89ab6d0623b4e322a18c2f8f98c29 *R/pre-action-recipe.R
@@ -21,13 +21,13 @@ be7ba0942a6cccfb1700f222f754cb4f *R/pull.R
 973577caa8e04abc509a2cc96112059c *R/stage.R
 2b304bda2ee0be845c2b8cd4db64a62c *R/utils.R
 473ba7a149305dc6964913a72c202bc6 *R/workflow.R
-1e333fb1f57fbf3a35647f5b0701c39c *R/workflows-package.R
-a30c377467324d91fd6fa5c1e8ca4dc9 *R/zzz.R
+55d3c6c98765c4f1928011a9923328da *R/workflows-package.R
+01d8fd82f645b8e62d5729fbe204eac8 *R/zzz.R
 7b757a3b1001c62b8791e9736a7c4515 *README.md
-6334f05aba19e7d758c3a0f1834c29f5 *build/vignette.rds
+8a59e1742da73d93ddc0375f8c38b225 *build/vignette.rds
 c5668b9cd1601b17d52cc470442f5484 *inst/doc/stages.R
 220b555b64d2564c6876841660843ed3 *inst/doc/stages.Rmd
-763b78f2c53dae40d9f94a52b9bba4b9 *inst/doc/stages.html
+521d6a6ef7d793c72be2ac002e757f7b *inst/doc/stages.html
 39cde99db7e401c3da3485425379c0f0 *man/add_case_weights.Rd
 1a7df10a812e4f9370ea98c41a8f1563 *man/add_formula.Rd
 74c6182ccff4b59fc07b6b02e05e0d12 *man/add_model.Rd
@@ -42,7 +42,7 @@ a1b8c987c676c16af790f563f96cbb1f *man/figures/lifecycle-deprecated.svg
 db3880c6278623c4aac72f123cb9664e *man/fit-workflow.Rd
 c03fd5856bdc78a1df8f7543868407bd *man/glance.workflow.Rd
 fb1c744ab4875e00ac389e325cf65197 *man/is_trained_workflow.Rd
-dca3716e52c7826aa7aa004df26f21fa *man/predict-workflow.Rd
+c6adb3d6333e6b89f426ddb26eb40c83 *man/predict-workflow.Rd
 eb8f829eef9493ece9b632226f2f6eef *man/reexports.Rd
 04f0edf0d608ffdb4ae091606cf1cee6 *man/rmd/add-formula.Rmd
 6ad7401be755812413fc232fe623d7f6 *man/rmd/indicators.Rmd
@@ -72,7 +72,7 @@ ad1c3a4a83dd1af1c7be92d29b96edcc *tests/testthat/helper-extract_parameter_set.R
 3a9eaf55a66d8a5134cbd6702ee16d66 *tests/testthat/test-broom.R
 67ccba524b436c9bb0ea5a0d8a8271ba *tests/testthat/test-butcher.R
 aeaad7685d78b067839bec8b67492533 *tests/testthat/test-control.R
-b3fd98926f68b176c4e1539454fe2985 *tests/testthat/test-extract.R
+a8062e2137774b96f3cf0f8af64fb7b7 *tests/testthat/test-extract.R
 85cd349ea71ce3381def609e05068054 *tests/testthat/test-fit-action-model.R
 2898d601ac2ee7f3a7650927783c87bb *tests/testthat/test-fit.R
 6ddfe3ef0289563e6492f01bb41134cf *tests/testthat/test-generics.R
