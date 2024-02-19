@@ -109,6 +109,10 @@ glance.workflow <- function(x, ...) {
 #'
 #' @return `new_data` with new prediction specific columns.
 #'
+#' @param eval_time For censored regression models, a vector of time points at
+#' which the survival probability is estimated. See
+#' [parsnip::augment.model_fit()] for more details.
+#'
 #' @export
 #' @examples
 #' if (rlang::is_installed("broom")) {
@@ -133,28 +137,42 @@ glance.workflow <- function(x, ...) {
 #' augment(wf_fit, attrition)
 #'
 #' }
-augment.workflow <- function(x, new_data, ...) {
+augment.workflow <- function(x, new_data, eval_time = NULL, ...) {
   fit <- extract_fit_parsnip(x)
+  mold <- extract_mold(x)
+
+  # supply outcomes to `augment.model_fit()` if possible (#131)
+  outcomes <- FALSE
+  if (length(fit$preproc$y_var) > 0) {
+    outcomes <- all(fit$preproc$y_var %in% names(new_data))
+  }
 
   # `augment.model_fit()` requires the pre-processed `new_data`
-  predictors <- forge_predictors(new_data, x)
-  predictors <- prepare_augment_predictors(predictors)
-  predictors_and_predictions <- augment(fit, predictors, ...)
+  forged <- hardhat::forge(new_data, blueprint = mold$blueprint, outcomes = outcomes)
 
-  prediction_columns <- setdiff(
-    names(predictors_and_predictions),
-    names(predictors)
+  if (outcomes) {
+    new_data_forged <- vctrs::vec_cbind(forged$predictors, forged$outcomes)
+  } else {
+    new_data_forged <- forged$predictors
+  }
+
+  new_data_forged <- prepare_augment_new_data(new_data_forged)
+  out <- augment(fit, new_data_forged, eval_time = eval_time, ...)
+
+  augment_columns <- setdiff(
+    names(out),
+    names(new_data_forged)
   )
 
-  predictions <- predictors_and_predictions[prediction_columns]
+  out <- out[augment_columns]
 
   # Return original `new_data` with new prediction columns
-  out <- vctrs::vec_cbind(new_data, predictions)
+  out <- vctrs::vec_cbind(out, new_data)
 
   out
 }
 
-prepare_augment_predictors <- function(x) {
+prepare_augment_new_data <- function(x) {
   # `augment()` works best with a data frame of predictors,
   # so we need to undo any matrix/sparse matrix compositions that
   # were returned from `hardhat::forge()` (#148)
