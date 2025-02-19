@@ -1,3 +1,5 @@
+skip_if_not_installed("recipes")
+
 test_that("can predict from a workflow", {
   mod <- parsnip::linear_reg()
   mod <- parsnip::set_engine(mod, "lm")
@@ -120,8 +122,9 @@ test_that("blueprint will get passed on to hardhat::forge()", {
   mod1 <- fit(workflow1, train)
   mod2 <- fit(workflow2, train)
 
+  # Warning from hardhat, so we don't snapshot it
   expect_warning(pred1 <- predict(mod1, test))
-  expect_warning(pred2 <- predict(mod2, test), NA)
+  expect_no_warning(pred2 <- predict(mod2, test))
 
   expect_identical(
     pred1[[".pred"]],

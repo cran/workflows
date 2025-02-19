@@ -10,6 +10,7 @@
 \alias{extract_preprocessor.workflow}
 \alias{extract_parameter_set_dials.workflow}
 \alias{extract_parameter_dials.workflow}
+\alias{extract_fit_time.workflow}
 \title{Extract elements of a workflow}
 \usage{
 \method{extract_spec_parsnip}{workflow}(x, ...)
@@ -27,6 +28,8 @@
 \method{extract_parameter_set_dials}{workflow}(x, ...)
 
 \method{extract_parameter_dials}{workflow}(x, parameter, ...)
+
+\method{extract_fit_time}{workflow}(x, summarize = TRUE, ...)
 }
 \arguments{
 \item{x}{A workflow}
@@ -37,6 +40,9 @@
 fitted recipe should be returned. This argument should be named.}
 
 \item{parameter}{A single string for the parameter ID.}
+
+\item{summarize}{A logical for whether the elapsed fit time should be returned as a
+single row or multiple rows.}
 }
 \value{
 The extracted value from the object, \code{x}, as described in the description
@@ -61,6 +67,10 @@ variable selectors.
 whether the fitted or original recipe is returned.
 \item \code{extract_parameter_dials()} returns a single dials parameter object.
 \item \code{extract_parameter_set_dials()} returns a set of dials parameter objects.
+\item \code{extract_fit_time()} returns a tibble with elapsed fit times. The fit
+times correspond to the time for the parsnip engine or recipe steps to fit
+(or their sum if \code{summarize = TRUE}) and do not include other portions of
+the elapsed time in \code{\link[=fit.workflow]{fit.workflow()}}.
 }
 }
 \details{
@@ -86,6 +96,7 @@ workflow_fit \%>\% extract_fit_parsnip() \%>\% predict(new_data)
 }\if{html}{\out{</div>}}
 }
 \examples{
+\dontshow{if (rlang::is_installed("recipes")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(parsnip)
 library(recipes)
 library(magrittr)
@@ -131,4 +142,5 @@ identical(
   extract_mold(fit_recipe_wf)$blueprint$recipe,
   extract_recipe(fit_recipe_wf)
 )
+\dontshow{\}) # examplesIf}
 }

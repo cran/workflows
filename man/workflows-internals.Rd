@@ -36,6 +36,7 @@ for usage by the tuning package, \href{https://github.com/tidymodels/tune}{tune}
 and the general user should never need to worry about them.
 }
 \examples{
+\dontshow{if (rlang::is_installed("recipes")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(parsnip)
 library(recipes)
 library(magrittr)
@@ -62,5 +63,6 @@ wf_fit
 try(predict(wf_fit_model, mtcars))
 
 predict(wf_fit, mtcars)
+\dontshow{\}) # examplesIf}
 }
 \keyword{internal}

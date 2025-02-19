@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# workflows <a href='https://workflows.tidymodels.org'><img src='man/figures/logo.png' align="right" height="139" /></a>
+# workflows <a href='https://workflows.tidymodels.org'><img src='man/figures/logo.png' alt = 'A teal-colored hexagonal logo. The word WORKFLOWS is centered inside of a diagram of circular cycle, with a magrittr pipe on the top and a directed graph on the bottom.' align="right" height="139" /></a>
 
 <!-- badges: start -->
 
@@ -109,7 +109,7 @@ By contributing to this project, you agree to abide by its terms.
 
 - For questions and discussions about tidymodels packages, modeling, and
   machine learning, please [post on Posit
-  Community](https://community.rstudio.com/new-topic?category_id=15&tags=tidymodels,question).
+  Community](https://forum.posit.co/new-topic?category_id=15&tags=tidymodels,question).
 
 - If you think you have encountered a bug, please [submit an
   issue](https://github.com/tidymodels/workflows/issues).

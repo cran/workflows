@@ -26,7 +26,7 @@
 #'
 #' @includeRmd man/rmd/indicators.Rmd details
 #'
-#' @examples
+#' @examplesIf rlang::is_installed(c("recipes", "modeldata"))
 #' library(parsnip)
 #' library(recipes)
 #' library(magrittr)
@@ -89,8 +89,8 @@ add_preprocessor <- function(x, preprocessor, ..., call = caller_env()) {
     return(add_variables(x, variables = preprocessor))
   }
 
-  abort(
-    "`preprocessor` must be a formula, recipe, or a set of workflow variables.",
+  cli_abort(
+    "{.arg preprocessor} must be a formula, recipe, or a set of workflow variables.",
     call = call
   )
 }
@@ -102,19 +102,19 @@ new_workflow <- function(pre = new_stage_pre(),
                          post = new_stage_post(),
                          trained = FALSE) {
   if (!is_stage(pre)) {
-    abort("`pre` must be a `stage`.")
+    cli_abort("{.arg pre} must be a `stage`.")
   }
 
   if (!is_stage(fit)) {
-    abort("`fit` must be a `stage`.")
+    cli_abort("{.arg fit} must be a `stage`.")
   }
 
   if (!is_stage(post)) {
-    abort("`post` must be a `stage`.")
+    cli_abort("{.arg post} must be a `stage`.")
   }
 
   if (!is_scalar_logical(trained)) {
-    abort("`trained` must be a single logical value.")
+    cli_abort("{.arg trained} must be a single logical value.")
   }
 
   data <- list(
@@ -144,7 +144,7 @@ is_workflow <- function(x) {
 #' @return A single logical indicating if the workflow has been trained or not.
 #'
 #' @export
-#' @examples
+#' @examplesIf rlang::is_installed("recipes")
 #' library(parsnip)
 #' library(recipes)
 #' library(magrittr)

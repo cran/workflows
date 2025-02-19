@@ -1,3 +1,5 @@
+skip_if_not_installed("recipes")
+
 # ------------------------------------------------------------------------------
 # add_case_weights()
 
@@ -196,9 +198,10 @@ test_that("case weights + recipe can optionally require case weights at predict 
 
   df$w <- NULL
 
-  expect_snapshot(error = TRUE, {
-    predict(wf, df)
-  })
+  # missing case weights error--don't snapshot test so as not to be
+  # sensitive to the wording of the error message (#278)
+  skip_on_cran()
+  expect_error(predict(wf, df), regexp = "missing")
 })
 
 test_that("case weights + recipe requires extra roles at predict time by default", {
@@ -237,9 +240,10 @@ test_that("case weights + recipe requires extra roles at predict time by default
 
   df$w <- NULL
 
-  expect_snapshot(error = TRUE, {
-    predict(wf, df)
-  })
+  # missing case weights error--don't snapshot test so as not to be
+  # sensitive to the wording of the error message (#278)
+  skip_on_cran()
+  expect_error(predict(wf, df), regexp = "missing")
 })
 
 test_that("case weights + recipe can optionally not require extra roles at predict time", {
@@ -478,8 +482,7 @@ test_that("case weights `col` must exist in `data`", {
   wf <- add_formula(wf, mpg ~ .)
   wf <- add_case_weights(wf, foo)
 
-  # Tidyselect error
-  expect_error(fit(wf, mtcars))
+  expect_error(fit(wf, mtcars), class = "vctrs_error_subscript_oob")
 })
 
 test_that("case weights `col` can't select >1 columns in `data`", {

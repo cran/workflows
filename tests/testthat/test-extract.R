@@ -1,3 +1,7 @@
+skip_if_not_installed("recipes")
+skip_if_not_installed("modeldata")
+skip_if_not_installed("probably")
+
 data(Chicago, package = "modeldata")
 
 # ------------------------------------------------------------------------------
@@ -352,4 +356,42 @@ test_that("extract single parameter from workflow with tunable recipe and model"
     extract_parameter_dials(wf_tunable, parameter = "rules"),
     NA
   )
+})
+
+# ------------------------------------------------------------------------------
+# extract_recipe()
+
+test_that("extract_fit_time() works", {
+  skip_if_not_installed("recipes")
+  rec_spec <- recipes::recipe(mpg ~ ., data = mtcars) %>%
+    recipes::step_scale(recipes::all_numeric_predictors(), id = "scale") %>%
+    recipes::step_center(recipes::all_numeric_predictors(), id = "center")
+
+  lm_spec <- parsnip::linear_reg()
+
+  wf <- workflow(rec_spec, lm_spec) %>% fit(mtcars)
+
+  res <- extract_fit_time(wf)
+
+  expect_s3_class(res, "tbl_df")
+  expect_identical(names(res), c("stage", "stage_id", "elapsed"))
+  expect_identical(res$stage, "workflow")
+  expect_identical(res$stage_id, "workflow")
+  expect_true(is.double(res$elapsed))
+  expect_true(res$elapsed >= 0)
+
+  res <- extract_fit_time(wf, summarize = FALSE)
+
+  expect_s3_class(res, "tbl_df")
+  expect_identical(names(res), c("stage", "stage_id", "elapsed"))
+  expect_identical(
+    res$stage,
+    c("preprocess", "preprocess", "preprocess", "preprocess", "model")
+  )
+  expect_identical(
+    res$stage_id,
+    c("prep.scale", "bake.scale", "prep.center", "bake.center", "linear_reg")
+  )
+  expect_true(is.double(res$elapsed))
+  expect_true(all(res$elapsed >= 0))
 })

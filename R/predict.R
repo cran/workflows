@@ -25,7 +25,7 @@
 #'
 #' @name predict-workflow
 #' @export
-#' @examples
+#' @examplesIf rlang::is_installed("recipes")
 #' library(parsnip)
 #' library(recipes)
 #' library(magrittr)
@@ -53,10 +53,17 @@ predict.workflow <- function(object, new_data, type = NULL, opts = list(), ...) 
   workflow <- object
 
   if (!is_trained_workflow(workflow)) {
-    abort(c(
+    cli_abort(c(
       "Can't predict on an untrained workflow.",
-      i = "Do you need to call `fit()`?"
+      "i" = "Do you need to call {.fun fit}?"
     ))
+  }
+
+  if (is_sparse_matrix(new_data)) {
+    new_data <- sparsevctrs::coerce_to_sparse_tibble(
+      new_data,
+      call = rlang::caller_env(0)
+    )
   }
 
   fit <- extract_fit_parsnip(workflow)

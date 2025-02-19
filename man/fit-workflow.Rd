@@ -151,6 +151,7 @@ behavior from the model’s computational engine.
 }
 
 \examples{
+\dontshow{if (rlang::is_installed("recipes")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(parsnip)
 library(recipes)
 library(magrittr)
@@ -173,4 +174,5 @@ recipe_wf <- base_wf \%>\%
   add_recipe(recipe)
 
 fit(recipe_wf, mtcars)
+\dontshow{\}) # examplesIf}
 }

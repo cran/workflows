@@ -1,3 +1,23 @@
+# workflows 1.2.0
+
+## New features
+
+* Enable fitting and prediction with sparse data.
+     - `fit()` can now take dgCMatrix and sparse tibbles as data values when 
+       `add_recipe()` or `add_variables()` is used (#245, #258).
+     - `predict()` can now take dgCMatrix and sparse tibble input for `new_data` 
+       argument (#261).
+
+* `extract_fit_time()` returns the time it took to train the workflow (#191).
+
+## Bug fixes and minor improvements
+
+* Transition package warnings and errors to use cli instead of rlang (#241).
+
+* Minimum R version bumped to 4.0.0.
+
+* Added reference to `add_variables()` in `stages` vignette (@brshallo, #190).
+
 # workflows 1.1.4
 
 * While `augment.workflow()` previously never returned a `.resid` column, the 
